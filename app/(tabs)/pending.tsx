@@ -81,7 +81,7 @@ export default function PendingScreen() {
                                 ) : (
                                     <>
                                         <TouchableOpacity style={styles.btnReject} onPress={() => handleReject(item.id)} disabled={actionLoadingId !== null}>
-                                            <X color="white" size={20} />
+                                            <X color="red" size={20} />
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.btnAccept} onPress={() => handleAccept(item.id)} disabled={actionLoadingId !== null}>
                                             <Check color="white" size={20} />
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     typeTag: { fontSize: 10, color: '#AAA', fontWeight: 'bold', marginBottom: 5 },
     content: { fontSize: 16, color: '#333' },
     actions: { flexDirection: 'row', gap: 10 },
-    btnReject: { backgroundColor: '#FF5252', padding: 10, borderRadius: 15 },
-    btnAccept: { backgroundColor: '#4CAF50', padding: 10, borderRadius: 15 }
+    btnReject: { padding: 10, borderRadius: 15 },
+    btnAccept: { backgroundColor: '#000000ff', padding: 10, borderRadius: 15 }
 });

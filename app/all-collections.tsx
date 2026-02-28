@@ -57,9 +57,14 @@ export default function AllCollectionsScreen() {
             />
             <Stack.Screen
                 options={{
-                    title: 'Collections',
+                    headerTitle: () => (
+                        <TouchableOpacity onPress={() => router.back()}>
+                            <Text style={{ fontSize: 17, fontWeight: '600' }}>Collections</Text>
+                        </TouchableOpacity>
+                    ),
                     headerShown: true,
                     headerShadowVisible: false,
+                    headerBackVisible: false,
                     headerLeft: () => (
                         <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 10 }}>
                             <ChevronLeft size={28} color="#000" />

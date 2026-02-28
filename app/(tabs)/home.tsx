@@ -112,9 +112,17 @@ export default function HomeScreen() {
                                         {isCompleted && <View style={styles.innerCircle} />}
                                     </View>
                                 </TouchableOpacity>
-                                <Text style={[styles.taskTitle, isCompleted && styles.completedTitle]}>
-                                    {task.title}
-                                </Text>
+                                <TouchableOpacity
+                                    style={{ flex: 1 }}
+                                    onPress={() => router.push({
+                                        pathname: "/detail",
+                                        params: { item: JSON.stringify(task), mode: 'knowledge' }
+                                    })}
+                                >
+                                    <Text style={[styles.taskTitle, isCompleted && styles.completedTitle]}>
+                                        {task.title}
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
                             <Text style={styles.dateText}>{formatDate(task.createdAt)}</Text>
                         </View>
@@ -154,7 +162,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF', padding: 25 },
+    container: { flex: 1, backgroundColor: '#FFF', padding: 25, paddingTop: 35 },
     header: { alignItems: 'flex-end', marginBottom: 10, marginTop: 15 },
     avatar: { width: 35, height: 35, borderRadius: 20, backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#DDD' },
     sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },

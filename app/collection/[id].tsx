@@ -49,9 +49,14 @@ export default function CollectionDetailScreen() {
             />
             <Stack.Screen
                 options={{
-                    title: id as string,
+                    headerTitle: () => (
+                        <TouchableOpacity onPress={() => router.back()}>
+                            <Text style={{ fontSize: 17, fontWeight: '600' }}>{id as string}</Text>
+                        </TouchableOpacity>
+                    ),
                     headerShadowVisible: false,
                     headerLargeTitle: true,
+                    headerBackVisible: false,
                 }}
             />
 

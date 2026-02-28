@@ -53,6 +53,13 @@ export default function AllTasksScreen() {
     const renderTask = ({ item }: { item: Note }) => {
         const isCompleted = completingIds.has(item.id);
 
+        const openDetail = () => {
+            router.push({
+                pathname: "/detail",
+                params: { item: JSON.stringify(item), mode: 'knowledge' }
+            });
+        };
+
         return (
             <View style={styles.taskRow}>
                 <View style={styles.leftContent}>
@@ -65,11 +72,15 @@ export default function AllTasksScreen() {
                             {isCompleted && <View style={styles.innerCircle} />}
                         </View>
                     </TouchableOpacity>
-                    <Text style={[styles.taskTitle, isCompleted && styles.completedTitle]}>
-                        {item.title}
-                    </Text>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={openDetail}>
+                        <Text style={[styles.taskTitle, isCompleted && styles.completedTitle]}>
+                            {item.title}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
-                <Text style={styles.dateText}>{formatDate(item.createdAt)}</Text>
+                <TouchableOpacity onPress={openDetail}>
+                    <Text style={styles.dateText}>{formatDate(item.createdAt)}</Text>
+                </TouchableOpacity>
             </View>
         );
     };
@@ -77,16 +88,23 @@ export default function AllTasksScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <Stack.Screen
+
                 options={{
-                    title: 'Tasks',
+                    headerTitle: () => (
+                        <TouchableOpacity onPress={() => router.back()}>
+                            <Text style={{ fontSize: 17, fontWeight: '600' }}>Tasks</Text>
+                        </TouchableOpacity>
+                    ),
                     headerShown: true,
                     headerShadowVisible: false,
+                    headerBackVisible: false,
                     headerLeft: () => (
                         <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 10 }}>
                             <ChevronLeft size={28} color="#000" />
                         </TouchableOpacity>
                     ),
                 }}
+
             />
 
             {loading && tasks.length === 0 ? (

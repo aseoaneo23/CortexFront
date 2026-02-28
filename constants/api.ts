@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "http://10.37.61.210:8000";
 
 export async function fetchAPI(path: string, options?: RequestInit) {
     const res = await fetch(BASE_URL + path, {

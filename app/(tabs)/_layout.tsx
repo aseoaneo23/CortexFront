@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
 import { Tabs } from 'expo-router';
 import { Layout, Clock, Plus } from 'lucide-react-native';
 import { View } from 'react-native';

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+SPDX-License-Identifier: MIT
+-->
+
+
 # Contributing to Cortex
 
 First off, thank you for considering contributing to Cortex! It’s people like you that make Cortex such a great tool.

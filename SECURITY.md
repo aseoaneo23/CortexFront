@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+SPDX-License-Identifier: MIT
+-->
+
+
 # Security Policy
 
 If you believe you've found a security vulnerability in Cortex, please report it to us as soon as possible.

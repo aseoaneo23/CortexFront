@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+SPDX-License-Identifier: MIT
+-->
+
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge

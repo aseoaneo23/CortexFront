@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+SPDX-License-Identifier: MIT
+-->
+
+
 # 1. Limpiar caché (recomendado)
 npx expo start -c
 

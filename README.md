@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+SPDX-License-Identifier: MIT
+-->
+
+
 # Cortex
 
 **Cortex** is an intelligent knowledge management system that helps you capture, process, and organize information from multiple sources using AI. It transforms raw input (text, URLs, images) into a structured knowledge base with summaries, tags, and actionable tasks.

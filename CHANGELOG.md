@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+SPDX-License-Identifier: MIT
+-->
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

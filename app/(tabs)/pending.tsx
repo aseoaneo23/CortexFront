@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
 import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Check, X } from 'lucide-react-native';

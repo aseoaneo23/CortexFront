@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
 import React, { useState } from "react";
 import {
     View,

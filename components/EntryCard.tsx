@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from "react-native";
 import { InboxItem, Note, formatDate } from "../constants/api";

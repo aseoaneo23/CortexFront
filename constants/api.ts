@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Antonio Seoane De Ois
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
 const BASE_URL = "http://10.37.61.210:8000";
 
 export async function fetchAPI(path: string, options?: RequestInit) {

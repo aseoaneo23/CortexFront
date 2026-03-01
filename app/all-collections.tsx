@@ -44,6 +44,13 @@ export default function AllCollectionsScreen() {
 
     return (
         <View style={styles.container}>
+            <Stack.Screen options={{ headerShown: false }} />
+            <View style={styles.headerRow}>
+                <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 10 }}>
+                    <ChevronLeft size={28} color="#000" />
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Collections</Text>
+            </View>
             {loading ? <ActivityIndicator style={{ marginTop: 50 }} /> : null}
             <FlatList
                 data={collections}
@@ -62,29 +69,14 @@ export default function AllCollectionsScreen() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}
             />
-            <Stack.Screen
-                options={{
-                    headerTitle: () => (
-                        <TouchableOpacity onPress={() => router.back()}>
-                            <Text style={{ fontSize: 17, fontWeight: '600' }}>Collections</Text>
-                        </TouchableOpacity>
-                    ),
-                    headerShown: true,
-                    headerShadowVisible: false,
-                    headerBackVisible: false,
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 10 }}>
-                            <ChevronLeft size={28} color="#000" />
-                        </TouchableOpacity>
-                    ),
-                }}
-            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF' },
+    container: { flex: 1, backgroundColor: '#FFF', paddingTop: 60 },
+    headerRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 25, marginBottom: 10 },
+    headerTitle: { fontSize: 24, fontWeight: '600', color: '#000' },
     scrollContent: { padding: 25, paddingBottom: 100 },
     columnWrapper: { justifyContent: 'space-between' },
     card: {

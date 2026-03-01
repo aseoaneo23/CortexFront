@@ -199,7 +199,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF', padding: 25, paddingTop: 35 },
+    container: { flex: 1, backgroundColor: '#FFF', padding: 25, paddingTop: 60 },
     header: { alignItems: 'flex-end', marginBottom: 10, marginTop: 15 },
     avatar: { width: 35, height: 35, borderRadius: 20, backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#DDD' },
     sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },

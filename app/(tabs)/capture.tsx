@@ -110,7 +110,7 @@ export default function CaptureScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF', justifyContent: 'center', padding: 25 },
+    container: { flex: 1, backgroundColor: '#FFF', justifyContent: 'center', padding: 25, paddingTop: 60 },
     captureBox: { backgroundColor: '#F9F9F9', borderRadius: 40, padding: 30, borderWidth: 1, borderColor: '#EEE' },
     mainTitle: { fontSize: 32, marginBottom: 20, color: '#444' },
     inputContainer: { height: 120, backgroundColor: '#FFF', borderRadius: 20, padding: 15, borderWidth: 1, borderColor: '#DDD' },

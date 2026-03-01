@@ -94,25 +94,13 @@ export default function AllTasksScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Stack.Screen
-
-                options={{
-                    headerTitle: () => (
-                        <TouchableOpacity onPress={() => router.back()}>
-                            <Text style={{ fontSize: 17, fontWeight: '600' }}>Tasks</Text>
-                        </TouchableOpacity>
-                    ),
-                    headerShown: true,
-                    headerShadowVisible: false,
-                    headerBackVisible: false,
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 10 }}>
-                            <ChevronLeft size={28} color="#000" />
-                        </TouchableOpacity>
-                    ),
-                }}
-
-            />
+            <Stack.Screen options={{ headerShown: false }} />
+            <View style={styles.headerRow}>
+                <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 10 }}>
+                    <ChevronLeft size={28} color="#000" />
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Tasks</Text>
+            </View>
 
             {loading && tasks.length === 0 ? (
                 <View style={styles.centerBox}>
@@ -136,7 +124,9 @@ export default function AllTasksScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF' },
+    container: { flex: 1, backgroundColor: '#ffffffff', paddingTop: 60 },
+    headerRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 25, marginBottom: 10 },
+    headerTitle: { fontSize: 24, fontWeight: '600', color: '#000' },
     centerBox: { flex: 1, justifyContent: 'center', alignItems: 'center' },
     emptyText: { fontSize: 12, color: '#9B9B9B', letterSpacing: 2, fontWeight: '600' },
     taskRow: {

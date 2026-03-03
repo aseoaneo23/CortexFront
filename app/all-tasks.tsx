@@ -6,7 +6,8 @@
 
 
 import React, { useState, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
 import { fetchAPI, Note, formatDate } from '../constants/api';
@@ -96,10 +97,14 @@ export default function AllTasksScreen() {
         <SafeAreaView style={styles.container}>
             <Stack.Screen options={{ headerShown: false }} />
             <View style={styles.headerRow}>
-                <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 10 }}>
+                <TouchableOpacity
+                    onPress={() => router.back()}
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                >
                     <ChevronLeft size={28} color="#000" />
+                    <Text style={styles.headerTitle}>Tasks</Text>
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Tasks</Text>
+
             </View>
 
             {loading && tasks.length === 0 ? (
@@ -124,7 +129,7 @@ export default function AllTasksScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#ffffffff', paddingTop: 60 },
+    container: { flex: 1, backgroundColor: '#ffffffff' },
     headerRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 25, marginBottom: 10 },
     headerTitle: { fontSize: 24, fontWeight: '600', color: '#000' },
     centerBox: { flex: 1, justifyContent: 'center', alignItems: 'center' },

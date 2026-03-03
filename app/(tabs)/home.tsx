@@ -14,6 +14,7 @@ import { fetchAPI, Note, parseTags, formatDate } from '../../constants/api';
 export default function HomeScreen() {
     const router = useRouter();
     const [tasks, setTasks] = useState<Note[]>([]);
+    const [queries, setQueries] = useState<Note[]>([]);
     const [collectionsData, setCollectionsData] = useState<{ name: string, count: number, preview?: string }[]>([]);
     const [loading, setLoading] = useState(true);
     const [completingIds, setCompletingIds] = useState<Set<string>>(new Set());
@@ -24,14 +25,20 @@ export default function HomeScreen() {
             setLoading(true);
             const notes: Note[] = await fetchAPI('/brain');
 
-            // Filter tasks (category is "task"), take max 3
-            const taskNotes = notes.filter(n => n.category === 'task');
+            // Tasks: category is "task" AND deadline NOT NULL, sort by deadline asc, max 3
+            const taskNotes = notes
+                .filter(n => n.category === 'task' && n.deadline)
+                .sort((a, b) => (a.deadline || '').localeCompare(b.deadline || ''));
             setTasks(taskNotes.slice(0, 3));
 
-            // Group by category, EXCLUDING tasks
+            // Queries: category is "query", take max 3
+            const queryNotes = notes.filter(n => n.category === 'query');
+            setQueries(queryNotes.slice(0, 3));
+
+            // Collections: EXCLUDING tasks and queries, sort by count desc, max 4
             const grouped: Record<string, { count: number, preview?: string }> = {};
             notes.forEach(n => {
-                if (n.category !== 'task') {
+                if (n.category !== 'task' && n.category !== 'query') {
                     const cat = (n.category || 'reference').toUpperCase();
                     if (!grouped[cat]) grouped[cat] = { count: 0 };
                     grouped[cat].count += 1;
@@ -42,7 +49,9 @@ export default function HomeScreen() {
                     }
                 }
             });
-            const formattedCollections = Object.entries(grouped).map(([name, data]) => ({ name, ...data }));
+            const formattedCollections = Object.entries(grouped)
+                .map(([name, data]) => ({ name, ...data }))
+                .sort((a, b) => b.count - a.count);
             setCollectionsData(formattedCollections);
         } catch (error) {
             console.error("Error fetching data", error);
@@ -130,10 +139,6 @@ export default function HomeScreen() {
                 <ChevronRight size={28} color="#000" />
             </TouchableOpacity>
 
-            {loading && tasks.length === 0 ? (
-                <ActivityIndicator style={{ marginVertical: 20 }} />
-            ) : null}
-
             <View style={styles.taskVerticalList}>
                 {tasks.map(task => {
                     const isCompleted = completingIds.has(task.id);
@@ -167,6 +172,8 @@ export default function HomeScreen() {
                 })}
             </View>
 
+
+
             <TouchableOpacity
                 style={[styles.sectionHeader, { marginTop: 30 }]}
                 onPress={() => router.push('/all-collections')}
@@ -194,12 +201,36 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                 ))}
             </View>
+
+            <TouchableOpacity
+                style={[styles.sectionHeader, { marginTop: 30 }]}
+                onPress={() => router.push('/all-queries')}
+            >
+                <Text style={styles.title}>Queries</Text>
+                <ChevronRight size={28} color="#000" />
+            </TouchableOpacity>
+
+            <View style={styles.taskVerticalList}>
+                {queries.map(query => (
+                    <TouchableOpacity
+                        key={query.id}
+                        style={styles.taskRow}
+                        onPress={() => router.push({
+                            pathname: "/detail",
+                            params: { item: JSON.stringify(query), mode: 'knowledge' }
+                        })}
+                    >
+                        <Text style={styles.taskTitle}>{query.title}</Text>
+                        <Text style={styles.dateText}>{formatDate(query.createdAt)}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF', padding: 25, paddingTop: 60 },
+    container: { flex: 1, backgroundColor: '#ffffffff', padding: 25, paddingTop: 35 },
     header: { alignItems: 'flex-end', marginBottom: 10, marginTop: 15 },
     avatar: { width: 35, height: 35, borderRadius: 20, backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#DDD' },
     sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },

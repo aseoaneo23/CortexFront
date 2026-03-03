@@ -14,6 +14,7 @@ export default function RootLayout() {
             <StatusBar style="light" />
             <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="all-queries" options={{ headerShown: false }} />
             </Stack>
         </>
     );

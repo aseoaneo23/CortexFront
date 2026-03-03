@@ -5,7 +5,7 @@
  */
 
 
-const BASE_URL = "http://10.37.61.210:8000";
+const BASE_URL = "http://192.168.1.132:8000";
 
 export async function fetchAPI(path: string, options?: RequestInit) {
     const res = await fetch(BASE_URL + path, {
@@ -43,6 +43,9 @@ export interface Note {
     content: string;      // markdown
     category: string;     // study | tech | idea | task | reference
     tags: string;         // JSON array string
+    sources: string;      // JSON array string of URLs
+    deadline: string | null;
+    rawContent: string;   // original user input
     createdAt: string;
 }
 
@@ -55,6 +58,23 @@ export function parseTags(tagsStr: string): string[] {
     } catch {
         return [];
     }
+}
+
+export function parseSources(sourcesStr: string): string[] {
+    try {
+        const parsed = JSON.parse(sourcesStr);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch { return []; }
+}
+
+export function formatDeadline(iso: string | null): string {
+    if (!iso) return '';
+    try {
+        const d = new Date(iso);
+        return d.toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric'
+        }).toUpperCase();
+    } catch { return ''; }
 }
 
 export function formatDate(iso: string): string {

@@ -4,32 +4,24 @@
  * SPDX-License-Identifier: MIT
  */
 
-
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
-import { fetchAPI, Note, parseTags } from '../constants/api';
+import { fetchAPI, Note, formatDate } from '../constants/api';
 
-export default function AllCollectionsScreen() {
+export default function AllQueriesScreen() {
     const router = useRouter();
-    const [collections, setCollections] = useState<{ name: string, count: number }[]>([]);
+    const [queries, setQueries] = useState<Note[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const loadCollections = async () => {
+    const loadQueries = async () => {
         setLoading(true);
         try {
             const notes: Note[] = await fetchAPI('/brain');
-            const grouped: Record<string, number> = {};
-            notes.forEach(n => {
-                if (n.category !== 'task') {
-                    const cat = (n.category || 'reference').toUpperCase();
-                    grouped[cat] = (grouped[cat] || 0) + 1;
-                }
-            });
-            const data = Object.entries(grouped).map(([name, count]) => ({ name, count }));
-            setCollections(data);
+            const filtered = notes.filter(n => n.category === 'query');
+            setQueries(filtered);
         } catch (error) {
             console.error(error);
         } finally {
@@ -39,7 +31,7 @@ export default function AllCollectionsScreen() {
 
     useFocusEffect(
         useCallback(() => {
-            loadCollections();
+            loadQueries();
         }, [])
     );
 
@@ -52,24 +44,34 @@ export default function AllCollectionsScreen() {
                     style={{ flexDirection: 'row', alignItems: 'center' }}
                 >
                     <ChevronLeft size={28} color="#000" />
-                    <Text style={styles.headerTitle}>Collections</Text>
+                    <Text style={styles.headerTitle}>Queries</Text>
                 </TouchableOpacity>
             </View>
+
             {loading ? <ActivityIndicator style={{ marginTop: 50 }} /> : null}
+
             <FlatList
-                data={collections}
-                keyExtractor={(item) => item.name}
-                numColumns={2}
-                columnWrapperStyle={styles.columnWrapper}
+                data={queries}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={styles.card}
-                        onPress={() => router.push({ pathname: "/collection/[id]" as any, params: { id: item.name } })}
+                        style={styles.queryRow}
+                        onPress={() => router.push({
+                            pathname: "/detail",
+                            params: { item: JSON.stringify(item), mode: 'knowledge' }
+                        })}
                     >
-                        <Text style={styles.label}>{item.name}</Text>
-                        <Text style={styles.count}>{item.count} items</Text>
+                        <Text style={styles.queryTitle}>{item.title}</Text>
+                        <Text style={styles.dateText}>{formatDate(item.createdAt)}</Text>
                     </TouchableOpacity>
                 )}
+                ListEmptyComponent={
+                    !loading ? (
+                        <View style={styles.emptyState}>
+                            <Text style={styles.emptyText}>NO QUERIES YET</Text>
+                        </View>
+                    ) : null
+                }
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}
             />
@@ -82,16 +84,16 @@ const styles = StyleSheet.create({
     headerRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 25, marginBottom: 10 },
     headerTitle: { fontSize: 24, fontWeight: '600', color: '#000' },
     scrollContent: { padding: 25, paddingBottom: 100 },
-    columnWrapper: { justifyContent: 'space-between' },
-    card: {
-        width: '47%',
-        height: 120,
-        backgroundColor: '#F9F9F9',
-        borderRadius: 22,
-        padding: 20,
-        marginBottom: 15,
-        justifyContent: 'center'
+    queryRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F0F0F0',
     },
-    label: { fontSize: 12, fontWeight: '800', color: '#AAA', letterSpacing: 1 },
-    count: { fontSize: 18, fontWeight: '500', marginTop: 5 }
+    queryTitle: { fontSize: 16, color: '#0A0A0A', flex: 1, marginRight: 10 },
+    dateText: { fontSize: 11, color: '#9B9B9B', letterSpacing: 0.5 },
+    emptyState: { marginTop: 100, alignItems: 'center' },
+    emptyText: { color: '#AAA', fontWeight: '800', fontSize: 12, letterSpacing: 2 }
 });

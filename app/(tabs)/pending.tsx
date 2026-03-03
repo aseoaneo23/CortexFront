@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-
+/*
 import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Check, X } from 'lucide-react-native';
@@ -115,3 +115,5 @@ const styles = StyleSheet.create({
     btnReject: { padding: 10, borderRadius: 15 },
     btnAccept: { backgroundColor: '#000000ff', padding: 10, borderRadius: 15 }
 });
+
+*/

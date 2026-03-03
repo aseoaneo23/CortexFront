@@ -8,9 +8,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
 import { fetchAPI } from '../../constants/api';
 
 export default function CaptureScreen() {
+    const router = useRouter();
     const [type, setType] = useState('TEXT');
     const [content, setContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,12 +24,14 @@ export default function CaptureScreen() {
         try {
             await fetchAPI('/inbox', {
                 method: 'POST',
-                // Adjust type mapping if needed, e.g. "image" instead of "img"
                 body: JSON.stringify({ type: type === 'IMG' ? 'image' : type.toLowerCase(), rawContent: content })
             });
             setContent('');
             setSuccessMessage('✓ Captured');
-            setTimeout(() => setSuccessMessage(''), 2000);
+            setTimeout(() => {
+                setSuccessMessage('');
+                router.replace('/(tabs)/home');
+            }, 800);
         } catch (error) {
             console.error(error);
         } finally {
@@ -110,7 +114,7 @@ export default function CaptureScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FFF', justifyContent: 'center', padding: 25, paddingTop: 60 },
+    container: { flex: 1, backgroundColor: '#FFF', justifyContent: 'center', padding: 25 },
     captureBox: { backgroundColor: '#F9F9F9', borderRadius: 40, padding: 30, borderWidth: 1, borderColor: '#EEE' },
     mainTitle: { fontSize: 32, marginBottom: 20, color: '#444' },
     inputContainer: { height: 120, backgroundColor: '#FFF', borderRadius: 20, padding: 15, borderWidth: 1, borderColor: '#DDD' },
